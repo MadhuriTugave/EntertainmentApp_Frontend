@@ -7,7 +7,7 @@ import axios from "axios";
 import { fetchUser } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
 
-const Register = () => {
+const SignUp = () => {
   // State to store the email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -106,7 +106,7 @@ const Register = () => {
 
     // Send the registration request
     axios
-      .post(`${process.env.REACT_APP_API_URL}/user/register`, {
+      .post(`${process.env.REACT_APP_API_URL}/user/SignUp`, {
         email,
         password,
       })
@@ -147,9 +147,9 @@ const Register = () => {
 
       <div
         ref={registerBoxRef}
-        className="rounded-3xl bg-box-bg p-8 max-w-md w-full shadow-xl"
+        className="rounded-3xl bg-box-bg p-8 max-w-md w-full shadow-xl "
       >
-        <h1 className="text-heading-l text-white mb-8">Login</h1>
+        <h1 className="text-heading-l text-white mb-5 mt-8">Sign Up</h1>
 
         <form onSubmit={handleSignUp} className="space-y-5">
           {/* Email Address Input Field*/}
@@ -212,4 +212,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;

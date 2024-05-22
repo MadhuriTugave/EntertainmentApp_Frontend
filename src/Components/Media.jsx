@@ -9,8 +9,8 @@ const Media = () => {
   const { id } = useParams();
 
   // Use the custom hook to fetch media data
-  const { media, casts, urls, type, error } = useMedia(id); // Removed navigate from useMedia as it's not used within the hook
-
+  const { media, casts, urls, type} = useMedia(id); // Removed navigate from useMedia as it's not used within the hook
+console.log(media)
   // Function to render stars based on the rating
   const renderStars = (rating) => {
     const totalStars = 5;
@@ -34,22 +34,23 @@ const Media = () => {
     return stars;
   };
 
-  if (!media) {
-    return <div>Loading...</div>; // or loading indicator
-  }
+  // if (!media) {
+  //   return <div>Loading...</div>; // or loading indicator
+  // }
 
   const isMovie = type === "Movie";
 
-  return (
-    <div className="flex justify-center items-center h-screen lg:w-3/4 mx-auto overflow-x-auto">
-      <div className="p-8 text-white rounded-lg flex max-h-screen">
+  return ( !media ?(
+   <div>Loading...</div> ):
+    (<div className="flex justify-center items-center h-screen lg:w-3/4 mx-auto overflow-x-auto md:bg-gray-900 bg-orange-400">
+      <div className="p-8 text-white rounded-lg flex flex-col sm:flex-row md:bg-orange-400  max-h-screen ">
         <img
           src={media.posterUrl}
           alt={media.title}
-          className="w-[30%] h-[60%] object-cover rounded-lg mr-8"
-          style={{ maxWidth: "250px", maxHeight: "375px" }}
+          className="w-[60%] h-[60%] object-cover rounded-lg mr-8 mb-5"
+          style={{ minWidth: "240px", minHeight: "355px"}}
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <h1 className="text-heading-l mb-4">{media.title}</h1>
           <div className="flex items-center mb-4">
             {media.rating !== undefined && media.rating !== null && (
@@ -88,7 +89,7 @@ const Media = () => {
             {!isMovie && (
               <>
                 <div>
-                  <div className="text-body-m font-bold text-gray-400">
+                  <div className="text-body-m font-bold text-gray-500">
                     First Air Date
                   </div>
                   <div className="text-body-m font-bold">
@@ -96,7 +97,7 @@ const Media = () => {
                   </div>
                 </div>
                 <div>
-                  <div className="text-body-m font-bold text-gray-400">
+                  <div className="text-body-m font-bold text-gray-500">
                     Last Air Date
                   </div>
                   <div className="text-body-m font-bold">
@@ -106,13 +107,13 @@ const Media = () => {
               </>
             )}
             <div>
-              <div className="text-body-m font-bold text-gray-400">
+              <div className="text-body-m font-bold text-gray-500">
                 Language
               </div>
               <div className="text-body-m font-bold">{media.language}</div>
             </div>
             <div>
-              <div className="text-body-m font-bold text-gray-400">Status</div>
+              <div className="text-body-m font-bold text-gray-500">Status</div>
               <div className="text-body-m font-bold">
                 {media.status.charAt(0).toUpperCase() + media.status.slice(1)}
               </div>
@@ -137,7 +138,7 @@ const Media = () => {
 
           <div className="text-heading-xs font-bold mb-2">Cast</div>
           <div className="flex flex-wrap">
-            {casts?.slice(0, 25).map((actor, index) => (
+            {casts?.slice(0, 18).map((actor, index) => (
               <div
                 key={index}
                 className="text-body-s border border-white rounded-md px-1 py-1 mr-2 mb-2"
@@ -181,7 +182,7 @@ const Media = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 };
 

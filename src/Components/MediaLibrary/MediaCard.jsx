@@ -12,14 +12,14 @@ const MediaCard = ({
 }) => {
   // Fetch the release year from the release date
   const releaseYear = new Date(releaseDate).getFullYear();
-
+// console.log(title)
   // Set the media icon based on the media type
   const MediaIcon = mediaType === "Movie" ? FaFilm : FaTv;
 
   return (
     // Card container
     <div
-      className={`mt-4 group relative rounded-lg ${!isTrending ? "mb-8" : ""}`}
+      className={`mt-8 group relative rounded-lg ${!isTrending ? "mb-8" : ""}`}
       onClick={onCardClick}
     >
       {/* Banner image */}

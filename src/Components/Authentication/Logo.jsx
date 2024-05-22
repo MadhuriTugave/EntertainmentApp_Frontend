@@ -2,10 +2,10 @@ import LogoImage from "../../assets/logo.jpeg";
 
 const Logo = ({ logoTop }) => (
   <div
-    className="absolute left-1/2 transform -translate-x-1/2"
+    className="absolute "
     style={{ top: logoTop }}
   >
-    <img src={LogoImage} alt="Logo" />
+    <img src={LogoImage} alt="Logo"  className="w-32 h-32 object-cover rounded-full"/>
   </div>
 );
 

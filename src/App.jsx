@@ -1,12 +1,12 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "./Components/Home";
-import Login from "./Components/Authentication/Login";
-import Register from "./Components/Authentication/Register";
-import Media from "./Components/Media";
-import Movies from "./Components/Movies";
-import TvShows from "./Components/TvShows";
-import Watchlist from "./Components/Watchlist";
+import Home from "./components/Home";
+import Login from "./components/Authentication/Login";
+import SignUp from "./components/Authentication/Register";
+import Media from "./components/Media";
+import Movies from "./components/Movies";
+import TvShows from "./components/TvShows";
+import Watchlist from "./components/Watchlist";
 import { useEffect } from "react";
 import { fetchUser } from "./features/user/userSlice";
 import { useDispatch } from "react-redux";
@@ -31,7 +31,7 @@ function App() {
         {" "}
         <Route path="/" element=<Home /> />
         <Route path="/login" element=<Login /> />
-        <Route path="/register" element=<Register /> />
+        <Route path="/SignUp" element=<SignUp/> />
         <Route path="/movies" element=<Movies /> />
         <Route path="/tvshows" element=<TvShows /> />
         <Route path="/watchlist" element=<Watchlist /> />

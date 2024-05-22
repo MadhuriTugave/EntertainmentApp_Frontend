@@ -1,6 +1,7 @@
 import React from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import MediaCard from "./MediaCard";
+
+import TrendingMediaCard from "./TrendingMediaCard";
 
 const Trending = ({
   mediaList,
@@ -11,6 +12,11 @@ const Trending = ({
   scrollContent,
   containerRef,
 }) => {
+  // console.log(mediaList)
+  mediaList.map((media) => (
+    console.log(media.media_type ==="movie"? media.release_date:media.first_air_date)
+  ))
+ 
   return (
     <div className="ml-4 mb-8">
       <h1 className="text-heading-l text-white">Trending</h1>
@@ -22,20 +28,18 @@ const Trending = ({
           {mediaList.map((media) => (
             <div key={media._id} className="min-w-[250px] flex-shrink-0">
               <div className="mr-8">
-                <MediaCard
-                  bannerUrl={media.bannerUrl}
-                  title={media.title}
-                  releaseDate={
-                    media.type === "Movie"
-                      ? media.releaseDate
-                      : media.firstAirDate
+                <TrendingMediaCard
+                  bannerUrl={media.backdrop_path}
+                  title={media.media_type === "tv"? media.name : media.title}
+                  releaseDate={ media.media_type === "tv" 
+                  ?( media.first_air_date)
+                   :( media.release_date)
                   }
-                  mediaType={media.type}
-                  isTrending={true}
-                  onCardClick={() => handleCardClick(media._id, media.type)}
+                  mediaType={media.media_type}
+                 onCardClick={() => handleCardClick(media._id, media.media_type)}
                   isWatchlisted={media.isWatchlisted}
                   onWatchlistClick={() =>
-                    handleWatchListClick(media._id, media.type)
+                    handleWatchListClick(media._id, media.media_type)
                   }
                 />
               </div>

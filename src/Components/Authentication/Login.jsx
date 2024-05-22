@@ -91,7 +91,7 @@ const Login = () => {
 
     // Send the login request
     axios
-      .post(`${process.env.REACT_APP_API_URL}/user/login`, { email, password })
+      .post(`${process.env.REACT_APP_API_URL}/user/Login`, { email, password })
       .then((response) => {
         // Set access token in local storage
         localStorage.setItem("access_token", response.data.access_token);
@@ -122,7 +122,7 @@ const Login = () => {
 
   // Navigate to Sign Up Page
   const handleSignupClick = () => {
-    navigate("/register");
+    navigate("/SignUP");
   };
 
   return (
@@ -133,8 +133,8 @@ const Login = () => {
         ref={loginBoxRef}
         className="rounded-3xl bg-box-bg p-8 max-w-md w-full shadow-xl"
       >
-        <h1 className="text-heading-l text-white mb-8">Login</h1>
-        {/* Login Form*/}
+        <h1 className="text-heading-l text-white mb-5 mt-5 ">Login</h1>
+        {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-5">
           {/* Email Address Input Field*/}
           <InputField
