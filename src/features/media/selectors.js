@@ -49,7 +49,10 @@ export const selectTVShows = createSelector(
 export const selectWatchlist = createSelector(
   // Select watchlist from mediaSelector and set isWatchlisted to true
   [mediaSelector],
-  ({ watchlist }) => watchlist.map((item) => ({ ...item, isWatchlisted: true }))
+  ({watchlist = []}) =>{
+    console.log('watchlist:', watchlist);
+    return watchlist.map((item) => ({ ...item, isWatchlisted: true }))
+  } 
 );
 
 // Memoized selector for trending media

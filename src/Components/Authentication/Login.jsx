@@ -55,7 +55,7 @@ const Login = () => {
   }, []);
 
   // Regex to validate the email address
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   // Instantiate the navigate hook
   const navigate = useNavigate();
@@ -77,9 +77,10 @@ const Login = () => {
     // Check if the email is empty
     if (email === "") {
       setEmailError("Cannot be empty");
-    } else if (!emailRegex.test(email)) {
-      setEmailError("Invalid email");
     }
+    //  else if (!emailRegex.test(email)) {
+    //   setEmailError("Invalid email");
+    // }
 
     // Check if the password is empty
     if (password === "") {
@@ -94,6 +95,7 @@ const Login = () => {
       .post(`${process.env.REACT_APP_API_URL}/user/Login`, { email, password })
       .then((response) => {
         // Set access token in local storage
+        console.log(response);
         localStorage.setItem("access_token", response.data.access_token);
 
         // Fetch the user data
@@ -106,8 +108,9 @@ const Login = () => {
         if (err.response) {
           // Handle specific errors from the server
           if (err.response.status === 404) {
-            setEmailError("Invalid email");
+            setEmailError("User does not exist !!!");
           } else if (err.response.status === 401) {
+            console.log(err.response)
             setPasswordError("Invalid password");
           } else {
             // Display the error in the console

@@ -150,13 +150,13 @@ const NavBar = () => {
             <div className="text-white text-center">
               <button
                 className="bg-red-bg text-white m-2 py-2 px-4 rounded hover:bg-white transition duration-300 hover:text-red-500"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/Login")}
               >
                 Login
               </button>
               <button
                 className="bg-red-bg text-white m-2 py-2 px-4 rounded hover:bg-white transition duration-300 hover:text-red-500"
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/Signup")}
               >
                 Register
               </button>

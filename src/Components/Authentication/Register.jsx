@@ -138,7 +138,7 @@ const SignUp = () => {
 
   // Navigate to Login Page
   const handleLoginClick = () => {
-    navigate("/login");
+    navigate("/Login");
   };
 
   return (

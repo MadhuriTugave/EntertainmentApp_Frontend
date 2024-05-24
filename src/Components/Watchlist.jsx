@@ -58,7 +58,7 @@ const Watchlist = () => {
   // Redirect to /login if not logged in on mount
   useEffect(() => {
     if (!access_token) {
-      navigate("/login");
+      navigate("/Login");
       return;
     }
   }, [access_token, navigate]);
