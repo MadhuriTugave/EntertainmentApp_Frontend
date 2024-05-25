@@ -6,7 +6,7 @@ import Logo from "./Logo";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../../features/user/userSlice";
-
+import toast from 'react-hot-toast';
 const Login = () => {
   // State to store the email and password
   const [email, setEmail] = useState("");
@@ -55,7 +55,7 @@ const Login = () => {
   }, []);
 
   // Regex to validate the email address
-  // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   // Instantiate the navigate hook
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Login = () => {
   }, [access_token, navigate]);
 
   // Handle login
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     // Prevent the default form submission
     e.preventDefault();
 
@@ -75,53 +75,55 @@ const Login = () => {
     setPasswordError("");
 
     // Check if the email is empty
-    if (email === "") {
-      setEmailError("Cannot be empty");
+    if(email=== "" && password ===""){
+      toast.error("please fill the fields ");
+    }else{
+      if (email === "" ) {
+        toast.error("email Cannot be empty ");
+      }else if(password ===""){
+        toast.error("password Cannot be empty ");
+      }
     }
-    //  else if (!emailRegex.test(email)) {
-    //   setEmailError("Invalid email");
-    // }
+   
 
-    // Check if the password is empty
-    if (password === "") {
-      setPasswordError("Cannot be empty");
-    }
+    // // Check if the password is empty
+    // if (password === "") {
+    //   toast.error(" password Cannot be empty");
+    // }
 
     // Break the function if there are any errors
     if (emailError || passwordError) return;
-
+       
     // Send the login request
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/user/Login`, { email, password })
-      .then((response) => {
-        // Set access token in local storage
-        console.log(response);
+    if(email && password){
+      if (!emailRegex.test(email)) {
+        toast.error("Invalid email");
+      }else{
+      try {
+        const response= await axios.post(`${process.env.REACT_APP_API_URL}/user/Login`, { email, password })
+        // console.log(response)
+       
+            // Set access token in local storage
         localStorage.setItem("access_token", response.data.access_token);
 
         // Fetch the user data
         dispatch(fetchUser());
 
         // Navigate to the dashboard
-        navigate("/");
-      })
-      .catch((err) => {
-        if (err.response) {
-          // Handle specific errors from the server
-          if (err.response.status === 404) {
-            setEmailError("User does not exist !!!");
-          } else if (err.response.status === 401) {
-            console.log(err.response)
-            setPasswordError("Invalid password");
-          } else {
-            // Display the error in the console
-            console.error("Login Error:", err.response.data);
-          }
-        } else {
-          // Handle server errors
-          console.error("Network Error:", err);
-        }
-      });
-  };
+        toast.success(response.data.message);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      
+         } catch (error) {
+        toast.error(error.response.data.message);
+      }
+      }
+     
+    }
+    
+    
+  }
 
   // Navigate to Sign Up Page
   const handleSignupClick = () => {

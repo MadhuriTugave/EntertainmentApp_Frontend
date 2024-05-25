@@ -1,7 +1,8 @@
 import React from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-import TrendingMediaCard from "./TrendingMediaCard";
+
+import MediaCard from "./MediaCard";
 
 const Trending = ({
   mediaList,
@@ -12,11 +13,9 @@ const Trending = ({
   scrollContent,
   containerRef,
 }) => {
-  // console.log(mediaList)
-  mediaList.map((media) => (
-    console.log(media.media_type ==="movie"? media.release_date:media.first_air_date)
-  ))
- 
+  // console.log(mediaList.map((item)=> item["_doc"]._id))
+
+
   return (
     <div className="ml-4 mb-8">
       <h1 className="text-heading-l text-white">Trending</h1>
@@ -26,20 +25,22 @@ const Trending = ({
           className="flex overflow-x-auto no-scrollbar py-2 space-x-4 transition-all ease-in-out duration-300"
         >
           {mediaList.map((media) => (
-            <div key={media._id} className="min-w-[250px] flex-shrink-0">
+            <div key={media["_doc"]._id} className="min-w-[250px] flex-shrink-0">
               <div className="mr-8">
-                <TrendingMediaCard
-                  bannerUrl={media.backdrop_path}
-                  title={media.media_type === "tv"? media.name : media.title}
-                  releaseDate={ media.media_type === "tv" 
-                  ?( media.first_air_date)
-                   :( media.release_date)
+                <MediaCard
+                  bannerUrl={media["_doc"].bannerUrl}
+                  title={media["_doc"].title}
+                  releaseDate={
+                    media["_doc"].type === "Movie"
+                      ? media["_doc"].releaseDate
+                      : media["_doc"].firstAirDate
                   }
-                  mediaType={media.media_type}
-                 onCardClick={() => handleCardClick(media._id, media.media_type)}
-                  isWatchlisted={media.isWatchlisted}
+                  mediaType={media["_doc"].type}
+                  isTrending={true}
+                  onCardClick={() => handleCardClick(media["_doc"]._id, media["_doc"].type)}
+                  isWatchlisted={media["_doc"].isWatchlisted}
                   onWatchlistClick={() =>
-                    handleWatchListClick(media._id, media.media_type)
+                    handleWatchListClick(media["_doc"]._id, media["_doc"].type)
                   }
                 />
               </div>

@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import axios from "axios";
 import { fetchUser } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   // State to store the email and password
@@ -69,7 +70,7 @@ const SignUp = () => {
   }, [access_token, navigate]);
 
   // Placeholder function to handle the Sign Up
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
     // Reset the error messages
@@ -77,65 +78,65 @@ const SignUp = () => {
     setPasswordError("");
     setConfirmPasswordError("");
 
-    // Check if the email is empty
-    if (email === "") {
-      setEmailError("Cannot be empty");
-    }
+ 
+    
     // Validate the email address
-    else if (!emailRegex.test(email)) {
-      setEmailError("Invalid email");
-    }
+    // else if (!emailRegex.test(email)) {
+    //   toast.error("Invalid email");
+    // }
 
-    // Check if the password is empty
-    if (password === "") {
-      setPasswordError("Cannot be empty");
-    }
+   
+    
 
-    // Check if the confirm password is empty
-    if (confirmPassword === "") {
-      setConfirmPasswordError("Cannot be empty");
-    }
+  
+    
 
     // Check if the password and confirm password match
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
+    if (password ==="" && email ==="" && confirmPassword==="") {
+      toast.error("Please fill all the fields"); //check if all the fields are empty.
+    }else if (email === "") {
+        toast.error(" Email cannot be empty");   // Check if the email is empty
+      }else if (password === "") {
+        toast.error("password cannot be empty"); // Check if the password is empty
+      }else if (confirmPassword === "") {
+        toast.error("confirmPassword cannot be empty");  // Check if the confirm password is empty
+       }else if(password !== confirmPassword) {
+       return toast.error(" confirmPassword is not matching");
+      } 
+
+    
+   
+
+    if(email && password && confirmPassword ){
+       // Validate the email address
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email");
+    }else{
+      try {
+        // Send the registration request
+   const response = await axios.post(`${process.env.REACT_APP_API_URL}/user/SignUp`, {
+     email,
+     password,
+      })
+     // console.log(response)
+     //Set access token in local storage
+       localStorage.setItem("access_token", response.data.access_token);
+
+       // Fetch the user data
+       dispatch(fetchUser());
+
+       // Navigate to the dashboard
+       toast.success(response.data.message);
+       setTimeout(() => {
+         navigate("/");
+       }, 2000);
+     } catch (error) {
+       toast.error(error.response.data.message);
+     }
     }
-
-    // Break the function if there are any errors
-    if (emailError || passwordError || confirmPasswordError) return;
-
-    // Send the registration request
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/user/SignUp`, {
-        email,
-        password,
-      })
-      .then((response) => {
-        // Set access token in local storage
-        localStorage.setItem("access_token", response.data.access_token);
-
-        // Fetch the user data
-        dispatch(fetchUser());
-
-        // Navigate to the dashboard
-        navigate("/");
-      })
-      .catch((err) => {
-        if (err.response) {
-          // Handle specific errors from the server
-          if (err.response.status === 409) {
-            setEmailError("User already exists");
-          } else {
-            // Display the error in the console
-            console.error("Registration Error:", err.response.data);
-          }
-        } else {
-          // Handle server errors
-          console.error("Network Error:", err);
-        }
-      });
-  };
-
+      
+    }
+  }
   // Navigate to Login Page
   const handleLoginClick = () => {
     navigate("/Login");

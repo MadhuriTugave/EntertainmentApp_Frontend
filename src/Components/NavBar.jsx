@@ -158,7 +158,7 @@ const NavBar = () => {
                 className="bg-red-bg text-white m-2 py-2 px-4 rounded hover:bg-white transition duration-300 hover:text-red-500"
                 onClick={() => navigate("/Signup")}
               >
-                Register
+                SignUp
               </button>
             </div>
           )}

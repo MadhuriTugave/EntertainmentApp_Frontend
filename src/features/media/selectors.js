@@ -2,10 +2,11 @@ import { createSelector } from "reselect";
 import { watchlistSelector } from "../user/selectors";
 
 export const mediaSelector = (state) => ({
+
   movies: state.media.movies,
   tvShows: state.media.tvShows,
   trending: state.media.trending,
-  watchlist: state.media.watchlist,
+  watchlist: state.media.watchlist ,
 });
 
 // Memoized selector for media with isWatchlisted property
@@ -48,10 +49,11 @@ export const selectTVShows = createSelector(
 // Memoized selector for watchlist media
 export const selectWatchlist = createSelector(
   // Select watchlist from mediaSelector and set isWatchlisted to true
+
   [mediaSelector],
-  ({watchlist = []}) =>{
+  ({ watchlist = [] }) => {
     console.log('watchlist:', watchlist);
-    return watchlist.map((item) => ({ ...item, isWatchlisted: true }))
+    return watchlist.map((item) => ({ ...item, isWatchlisted: true }));
   } 
 );
 

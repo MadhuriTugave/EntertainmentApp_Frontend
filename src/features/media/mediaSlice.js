@@ -37,7 +37,7 @@ const mediaSlice = createSlice({
   initialState: {
     movies: [],
     tvShows: [],
-    watchlist: [],
+    watchlist:[],
     trending: [],
     status: "idle",
   },
@@ -48,6 +48,7 @@ const mediaSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchMedia.fulfilled, (state, action) => {
+     
         state.status = "succeeded";
         state.movies = action.payload.movies;
         state.tvShows = action.payload.tvShows;

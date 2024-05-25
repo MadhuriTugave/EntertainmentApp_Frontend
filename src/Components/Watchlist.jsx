@@ -18,6 +18,7 @@ const Watchlist = () => {
 
   // Access the watchlist list from the Redux store
   const watchlistList = useSelector(selectWatchlist);
+  console.log(watchlistList)
 
   // Hooks for navigation and dispatching actions
   const navigate = useNavigate();

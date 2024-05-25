@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { fetchUser } from "./features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { fetchMedia } from "./features/media/mediaSlice";
-
+import  { Toaster } from 'react-hot-toast';
 function App() {
   // Get the access token cookie
   const access_token = localStorage.getItem("access_token");
@@ -27,6 +27,7 @@ function App() {
 
   return (
     <>
+     <Toaster />
       <Routes>
         {" "}
         <Route path="/" element=<Home /> />
