@@ -78,65 +78,57 @@ const SignUp = () => {
     setPasswordError("");
     setConfirmPasswordError("");
 
- 
-    
     // Validate the email address
     // else if (!emailRegex.test(email)) {
     //   toast.error("Invalid email");
     // }
 
-   
-    
-
-  
-    
-
     // Check if the password and confirm password match
-    if (password ==="" && email ==="" && confirmPassword==="") {
+    if (password === "" && email === "" && confirmPassword === "") {
       toast.error("Please fill all the fields"); //check if all the fields are empty.
-    }else if (email === "") {
-        toast.error(" Email cannot be empty");   // Check if the email is empty
-      }else if (password === "") {
-        toast.error("password cannot be empty"); // Check if the password is empty
-      }else if (confirmPassword === "") {
-        toast.error("confirmPassword cannot be empty");  // Check if the confirm password is empty
-       }else if(password !== confirmPassword) {
-       return toast.error(" confirmPassword is not matching");
-      } 
-
-    
-   
-
-    if(email && password && confirmPassword ){
-       // Validate the email address
-    if (!emailRegex.test(email)) {
-      toast.error("Invalid email");
-    }else{
-      try {
-        // Send the registration request
-   const response = await axios.post(`${process.env.REACT_APP_API_URL}/user/SignUp`, {
-     email,
-     password,
-      })
-     // console.log(response)
-     //Set access token in local storage
-       localStorage.setItem("access_token", response.data.access_token);
-
-       // Fetch the user data
-       dispatch(fetchUser());
-
-       // Navigate to the dashboard
-       toast.success(response.data.message);
-       setTimeout(() => {
-         navigate("/");
-       }, 2000);
-     } catch (error) {
-       toast.error(error.response.data.message);
-     }
+    } else if (email === "") {
+      toast.error(" Email cannot be empty"); // Check if the email is empty
+    } else if (password === "") {
+      toast.error("password cannot be empty"); // Check if the password is empty
+    } else if (confirmPassword === "") {
+      toast.error("confirmPassword cannot be empty"); // Check if the confirm password is empty
+    } else if (password !== confirmPassword) {
+      return toast.error(" confirmPassword is not matching");
     }
-      
+
+    if (email && password && confirmPassword) {
+      // Validate the email address
+      if (!emailRegex.test(email)) {
+        toast.error("Invalid email");
+      } else {
+        try {
+          // Send the registration request
+          const response = await axios.post(
+            `${process.env.REACT_APP_API_URL}/user/SignUp`,
+            {
+              email,
+              password,
+            }
+          );
+          console.log(process.env.REACT_APP_API_URL);
+          // console.log(response)
+          //Set access token in local storage
+          localStorage.setItem("access_token", response.data.access_token);
+
+          // Fetch the user data
+          dispatch(fetchUser());
+
+          // Navigate to the dashboard
+          toast.success(response.data.message);
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        } catch (error) {
+          toast.error(error.response.data.message);
+        }
+      }
     }
-  }
+  };
   // Navigate to Login Page
   const handleLoginClick = () => {
     navigate("/Login");

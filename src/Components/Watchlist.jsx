@@ -3,74 +3,62 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import MediaContainer from "./MediaLibrary/MediaContainer";
 import { selectWatchlist } from "../features/media/selectors";
-import { toggleWatchlistItem } from "../features/user/userSlice";
+import { fetchUser, toggleWatchlistItem } from "../features/user/userSlice";
 import NavBar from "./NavBar";
 import { fetchMedia } from "../features/media/mediaSlice";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 
 const Watchlist = () => {
-  // State for the search term
   const [searchTerm, setSearchTerm] = useState("");
-
-  // State to store the search results
   const [searchResults, setSearchResults] = useState([]);
 
-  // Access the watchlist list from the Redux store
-  const watchlistList = useSelector(selectWatchlist);
-  console.log(watchlistList)
-
-  // Hooks for navigation and dispatching actions
+  const watchlist = useSelector((state) => state.user.data.watchlist) || [];
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Retrieve the access token from local storage to check user authentication
   const access_token = localStorage.getItem("access_token");
 
-  // Handler for navigating to the media detail page when a media card is clicked
   const handleCardClick = (id, type) => {
     navigate(`/media/${id}`);
   };
 
-  // Handler for adding or removing an item from the watchlist
   const handleWatchListClick = async (id, type) => {
     await dispatch(toggleWatchlistItem({ id, type }));
     dispatch(fetchMedia());
   };
 
-  // Fetch the search results based on the search term
   useEffect(() => {
-    const fetchResults = async () => {
-      if (searchTerm) {
+    if (searchTerm) {
+      const fetchResults = async () => {
         const movieRes = await axios.get(
           `${process.env.REACT_APP_API_URL}/movies/search?query=${searchTerm}`
         );
         const tvShowRes = await axios.get(
           `${process.env.REACT_APP_API_URL}/tvshows/search?query=${searchTerm}`
         );
-        setSearchResults([...movieRes.data, ...tvShowRes.data]); // Adjust based on actual API response structure
-      } else {
-        setSearchResults([]);
-      }
-    };
-    fetchResults();
+        setSearchResults([...movieRes.data, ...tvShowRes.data]);
+      };
+      fetchResults();
+    } else {
+      setSearchResults([]);
+    }
   }, [searchTerm]);
 
-  // Redirect to /login if not logged in on mount
   useEffect(() => {
     if (!access_token) {
-      navigate("/Login");
-      return;
+      navigate("/login");
+    } else {
+      dispatch(fetchUser());
     }
-  }, [access_token, navigate]);
+  }, [access_token, navigate, dispatch]);
 
-  // Render the Watchlist component with the Trending and MediaContainer components
   return (
     <>
       <NavBar />
       <div className="p-4 pl-6 md:pl-10 lg:pl-32 pt-8">
         <div className="max-w-lg flex items-center align-middle p-4 mb-4">
-          <FaSearch className="relative mr-2" />{" "}
+          <FaSearch className="relative mr-2" />
           <input
             id="search"
             type="search"
@@ -81,7 +69,7 @@ const Watchlist = () => {
           />
         </div>
         <MediaContainer
-          mediaList={searchTerm ? searchResults : watchlistList}
+          mediaList={searchTerm ? searchResults : watchlist}
           handleCardClick={handleCardClick}
           handleWatchListClick={handleWatchListClick}
           title={

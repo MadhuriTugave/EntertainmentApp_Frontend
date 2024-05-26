@@ -24,12 +24,12 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    data: null,
+    data: { watchlist: [] }, // Ensure watchlist is initialized as an empty array
     status: "idle",
   },
   reducers: {
     clearUser: (state) => {
-      state.data = null;
+      state.data = { watchlist: [] }; // Clear user data and reset watchlist
       localStorage.removeItem("access_token");
     },
     toggleWatchlistItem: (state, action) => {
