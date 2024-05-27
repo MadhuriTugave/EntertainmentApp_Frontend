@@ -10,7 +10,7 @@ const Media = () => {
 
   // Use the custom hook to fetch media data
   const { media, casts, urls, type} = useMedia(id); // Removed navigate from useMedia as it's not used within the hook
-// console.log(media)
+console.log(media)
   // Function to render stars based on the rating
   const renderStars = (rating) => {
     const totalStars = 5;
