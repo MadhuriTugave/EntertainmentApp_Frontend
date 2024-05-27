@@ -5,7 +5,7 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   const access_token = localStorage.getItem("access_token");
   if (access_token) {
     const data = await axios
-      .get(`${process.env.REACT_APP_API_URL}/user/me`, {
+      .get(`${process.env.REACT_APP_URL}/user/me`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -42,7 +42,7 @@ const userSlice = createSlice({
         watchlist.push({ _id: id, type });
         axios
           .post(
-            `${process.env.REACT_APP_API_URL}/watchlist/${id}`,
+            `${process.env.REACT_APP_URL}/watchlist/${id}`,
             {},
             {
               headers: {
@@ -57,7 +57,7 @@ const userSlice = createSlice({
         const watchlistSaveState = [...watchlist];
         watchlist.splice(itemIndex, 1);
         axios
-          .delete(`${process.env.REACT_APP_API_URL}/watchlist/${id}`, {
+          .delete(`${process.env.REACT_APP_URL}/watchlist/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },

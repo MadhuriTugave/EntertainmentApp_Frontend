@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Trending from "./MediaLibrary/Trending";
-import MediaContainer from "./MediaLibrary/MediaContainer";
+import MediaContainer from "./MediaLibrary/MediaContainers";
 import useScroll from "../hooks/useScroll";
 import { selectMedia, selectTrending } from "../features/media/selectors";
 import { toggleWatchlistItem } from "../features/user/userSlice";
@@ -46,7 +46,7 @@ const Home = () => {
   // Handler for adding or removing an item from the watchlist
   const handleWatchListClick = async (id, type) => {
     if (!access_token) {
-      navigate("/login");
+      navigate("/Login");
       return;
     }
     await dispatch(toggleWatchlistItem({ id, type }));
@@ -58,10 +58,10 @@ const Home = () => {
     const fetchResults = async () => {
       if (searchTerm) {
         const movieRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/movies/search?query=${searchTerm}`
+          `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
         );
         const tvShowRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/tvshows/search?query=${searchTerm}`
+          `${process.env.REACT_APP_URL}/tvshows/search?query=${searchTerm}`
         );
         setSearchResults([...movieRes.data, ...tvShowRes.data]); // Adjust based on actual API response structure
       } else {

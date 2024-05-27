@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import MediaContainer from "./MediaLibrary/MediaContainer";
-import { selectWatchlist } from "../features/media/selectors";
+import MediaContainer from "./MediaLibrary/MediaContainers";
+
 import { fetchUser, toggleWatchlistItem } from "../features/user/userSlice";
 import NavBar from "./NavBar";
 import { fetchMedia } from "../features/media/mediaSlice";
@@ -32,10 +32,10 @@ const Watchlist = () => {
     if (searchTerm) {
       const fetchResults = async () => {
         const movieRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/movies/search?query=${searchTerm}`
+          `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
         );
         const tvShowRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/tvshows/search?query=${searchTerm}`
+          `${process.env.REACT_APP_URL}/tvshows/search?query=${searchTerm}`
         );
         setSearchResults([...movieRes.data, ...tvShowRes.data]);
       };
@@ -47,7 +47,7 @@ const Watchlist = () => {
 
   useEffect(() => {
     if (!access_token) {
-      navigate("/login");
+      navigate("/Login");
     } else {
       dispatch(fetchUser());
     }

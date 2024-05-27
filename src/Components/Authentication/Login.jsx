@@ -12,6 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+ 
   // State to mamage focus on the input fields
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
@@ -100,7 +101,8 @@ const Login = () => {
         toast.error("Invalid email");
       }else{
       try {
-        const response= await axios.post(`${process.env.REACT_APP_API_URL}/user/Login`, { email, password })
+
+        const response= await axios.post(`${process.env.REACT_APP_URL}/user/Login`, { email, password })
         // console.log(response)
        
             // Set access token in local storage

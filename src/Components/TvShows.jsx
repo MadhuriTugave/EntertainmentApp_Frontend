@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import MediaContainer from "./MediaLibrary/MediaContainer";
+import MediaContainer from "./MediaLibrary/MediaContainers";
 import { selectTVShows } from "../features/media/selectors";
 import { toggleWatchlistItem } from "../features/user/userSlice";
 import NavBar from "./NavBar";
@@ -34,7 +34,7 @@ const TvShows = () => {
   // Handler for adding or removing an item from the watchlist
   const handleWatchListClick = async (id, type) => {
     if (!access_token) {
-      navigate("/login");
+      navigate("/Login");
       return;
     }
     await dispatch(toggleWatchlistItem({ id, type }));
@@ -46,7 +46,7 @@ const TvShows = () => {
     const fetchResults = async () => {
       if (searchTerm) {
         const movieRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/movies/search?query=${searchTerm}`
+          `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
         );
         setSearchResults(movieRes.data);
       } else {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import MediaContainer from "./MediaLibrary/MediaContainer";
+import MediaContainer from "./MediaLibrary/MediaContainers";
 import { selectMovies } from "../features/media/selectors";
 import { toggleWatchlistItem } from "../features/user/userSlice";
 import NavBar from "./NavBar";
@@ -22,7 +22,8 @@ const Movies = () => {
   // Hooks for navigation and dispatching actions
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+ 
+  //  console.log(process.env.REACT_APP_API_URL)
   // Retrieve the access token from local storage to check user authentication
   const access_token = localStorage.getItem("access_token");
 
@@ -34,7 +35,7 @@ const Movies = () => {
   // Handler for adding or removing an item from the watchlist
   const handleWatchListClick = async (id, type) => {
     if (!access_token) {
-      navigate("/login");
+      navigate("/Login");
       return;
     }
     await dispatch(toggleWatchlistItem({ id, type }));
@@ -46,7 +47,7 @@ const Movies = () => {
     const fetchResults = async () => {
       if (searchTerm) {
         const movieRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/movies/search?query=${searchTerm}`
+          `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
         );
         setSearchResults(movieRes.data);
       } else {
@@ -73,6 +74,7 @@ const Movies = () => {
           />
         </div>
         <MediaContainer
+        data-testid= "data"
           mediaList={searchTerm ? searchResults : moviesList}
           handleCardClick={handleCardClick}
           handleWatchListClick={handleWatchListClick}

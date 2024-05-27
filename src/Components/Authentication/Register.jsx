@@ -104,7 +104,7 @@ const SignUp = () => {
         try {
           // Send the registration request
           const response = await axios.post(
-            `${process.env.REACT_APP_API_URL}/user/SignUp`,
+            `${process.env.REACT_APP_URL}/user/SignUp`,
             {
               email,
               password,

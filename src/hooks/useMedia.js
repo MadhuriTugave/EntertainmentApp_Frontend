@@ -12,7 +12,7 @@ const useMedia = (id) => {
     const fetchMedia = async () => {
       try {
         const movieResponse = await axios.get(
-          `${process.env.REACT_APP_API_URL}/movies/${id}`
+          `${process.env.REACT_APP_URL}/movies/${id}`
         );
         setType("Movie");
         setMedia(movieResponse.data);
@@ -20,7 +20,7 @@ const useMedia = (id) => {
         if (err.response && err.response.status === 404) {
           try {
             const tvShowResponse = await axios.get(
-              `${process.env.REACT_APP_API_URL}/tvshows/${id}`
+              `${process.env.REACT_APP_URL}/tvshows/${id}`
             );
             setType("TVShow");
             setMedia(tvShowResponse.data);
@@ -51,10 +51,10 @@ const useMedia = (id) => {
       try {
         const [castsResponse, urlsResponse] = await Promise.all([
           axios.get(
-            `${process.env.REACT_APP_API_URL}/${type.toLowerCase()}s/${id}/cast`
+            `${process.env.REACT_APP_URL}/${type.toLowerCase()}s/${id}/cast`
           ),
           axios.get(
-            `${process.env.REACT_APP_API_URL}/${type.toLowerCase()}s/${id}/urls`
+            `${process.env.REACT_APP_URL}/${type.toLowerCase()}s/${id}/urls`
           ),
         ]);
         setCasts(castsResponse.data.cast);

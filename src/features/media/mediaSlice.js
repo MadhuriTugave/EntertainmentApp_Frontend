@@ -6,20 +6,19 @@ export const fetchMedia = createAsyncThunk("media/fetchMedia", async () => {
   const access_token = localStorage.getItem("access_token");
 
   // Fetch movies and tv shows
-  const moviesRes = await axios.get(`${process.env.REACT_APP_API_URL}/movies`);
-  const tvShowsRes = await axios.get(
-    `${process.env.REACT_APP_API_URL}/tvshows`
+  const moviesRes = await axios.get(`${process.env.REACT_APP_URL}/movies`);
+  const tvShowsRes = await axios.get(`${process.env.REACT_APP_URL}/tvshows`
   );
 
   const watchlistRes = access_token
-    ? await axios.get(`${process.env.REACT_APP_API_URL}/watchlist/details`, {
+    ? await axios.get(`${process.env.REACT_APP_URL}/watchlist/details`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
     : { data: [] };
   const trendingRes = await axios.get(
-    `${process.env.REACT_APP_API_URL}/trending`
+    `${process.env.REACT_APP_URL}/trending`
   );
 
   // Extract the data from the response
