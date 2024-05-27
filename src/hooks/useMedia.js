@@ -5,7 +5,7 @@ const useMedia = (id) => {
   const [media, setMedia] = useState(null);
   const [casts, setCasts] = useState([]);
   const [urls, setUrls] = useState({});
-
+  const [error, setError] = useState(null);
   const [type, setType] = useState(null);
 
   useEffect(() => {
@@ -26,15 +26,14 @@ const useMedia = (id) => {
             setMedia(tvShowResponse.data);
           } catch (innerErr) {
             if (innerErr.response && innerErr.response.status === 404) {
-              console.log("media not found")
-              // setError("Media not found");
+              setError("Media not found");
             } else {
-              // setError("An unexpected error occurred");
+              setError("An unexpected error occurred");
               console.error("Error fetching TV show:", innerErr);
             }
           }
         } else {
-          // setError("An unexpected error occurred");
+          setError("An unexpected error occurred");
           console.error("Error fetching movie:", err);
         }
       }
@@ -61,7 +60,7 @@ const useMedia = (id) => {
         setCasts(castsResponse.data.cast);
         setUrls(urlsResponse.data);
       } catch (err) {
-        // setError(`Error fetching additional data: ${err.message}`);
+        setError(`Error fetching additional data: ${err.message}`);
         console.error("Error fetching casts/URLs:", err);
       }
     };
@@ -69,9 +68,9 @@ const useMedia = (id) => {
     fetchCastsAndUrls();
   }, [type, id]);
 
-  // if (error) {
-  //   return { media: null, casts: [], urls: {}, type: null, error };
-  // }
+  if (error) {
+    return { media: null, casts: [], urls: {}, type: null, error };
+  }
 
   return { media, casts, urls, type };
 };
