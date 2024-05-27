@@ -7,7 +7,7 @@ const MediaContainer = ({
   handleWatchListClick,
   title,
 }) => {
-  // console.log(mediaList);
+ 
 
   const [isLandscape, setIsLandscape] = useState(
     window.innerWidth > window.innerHeight
