@@ -1,3 +1,51 @@
+# Entertainment-frontend App
+
+## Introduction
+
+Welcome to our Entertainment Application!! This is the last module Group project at Almabetter. It allows users to discover and explore a wide range of Movies and TvShows, including popular titles, upcoming releases, and personalized recommendations.
+
+Entertainment App is a web application that offers users to explore and enjoy a diverse range of movies. The platform provides an intuitive interface for users to discover movies, view detailed information like title, releaseyears, language and watch trailers. Additionally, the application incorporates user authentication while signup or login, bookmarking of favorite movies, and personalized recommendations.
+
+## Technologies Used
+
+- **npm**: Node Package Manager, for managing dependencies.
+- **React:** Front-end JavaScript library for building a dynamic user interface.
+- **Redux Toolkit:** State management for React applications.
+- **Tailwind CSS:** CSS framework for building modern and responsive designs.
+- **Node.js**: JavaScript runtime needed to run the server.
+- **Express.js:** Web application framework for building the backend server.
+- **MongoDB**: Database where all application data is stored.
+
+## Visit the website:
+   https://entertainment-b4e384.netlify.app/
+
+## Contributors
+- Madhuri Dalve
+- Riya Rawal
+
+## Setup Instructions
+
+### Step 1: Clone the Repository
+
+```sh
+git clone https://github.com/MadhuriTugave/EntertainmentApp_Frontend
+cd Entertainment-frontend
+```
+
+### Step 2: Environment Configuration
+
+Create .env and configure the environment variables:
+
+- `React_Api_URL`: Backend URL.
+
+
+### Step 3: Install Dependencies
+
+```sh
+npm install
+```
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
