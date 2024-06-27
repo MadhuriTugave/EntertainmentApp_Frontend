@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import MediaCard from "./MediaCard";
 
+
+import LoadingCard from "./loadingCard";
+
 const MediaContainer = ({
   mediaList,
   handleCardClick,
@@ -33,7 +36,7 @@ const MediaContainer = ({
           }, 1fr))`,
         }}
       >
-        {mediaList.map((media) => (
+        {mediaList.length >=1 ? mediaList.map((media) => (
           <MediaCard
             key={media._id}
             bannerUrl={media.bannerUrl}
@@ -46,7 +49,7 @@ const MediaContainer = ({
             isWatchlisted={media.isWatchlisted}
             onWatchlistClick={() => handleWatchListClick(media._id, media.type)}
           />
-        ))}
+        )) : <LoadingCard/> }
       </div>
     </div>
   );

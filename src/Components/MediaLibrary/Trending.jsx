@@ -3,6 +3,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 
 import MediaCard from "./MediaCard";
+import LoadingCard from "./loadingCard";
 
 const Trending = ({
   mediaList,
@@ -24,25 +25,27 @@ const Trending = ({
           ref={containerRef}
           className="flex overflow-x-auto no-scrollbar py-2 space-x-4 transition-all ease-in-out duration-300"
         >
-          {mediaList.map((media) => (
+          {!mediaList.length ? <LoadingCard/> : mediaList.map((media) => (
             <div key={media["_doc"]._id} className="min-w-[250px] flex-shrink-0">
               <div className="mr-8">
-                <MediaCard
-                  bannerUrl={media["_doc"].bannerUrl}
-                  title={media["_doc"].title}
-                  releaseDate={
-                    media["_doc"].type === "Movie"
-                      ? media["_doc"].releaseDate
-                      : media["_doc"].firstAirDate
-                  }
-                  mediaType={media["_doc"].type}
-                  isTrending={true}
-                  onCardClick={() => handleCardClick(media["_doc"]._id, media["_doc"].type)}
-                  isWatchlisted={media["_doc"].isWatchlisted}
-                  onWatchlistClick={() =>
-                    handleWatchListClick(media["_doc"]._id, media["_doc"].type)
-                  }
-                />
+            
+                 <MediaCard
+                 bannerUrl={media["_doc"].bannerUrl}
+                 title={media["_doc"].title}
+                 releaseDate={
+                   media["_doc"].type === "Movie"
+                     ? media["_doc"].releaseDate
+                     : media["_doc"].firstAirDate
+                 }
+                 mediaType={media["_doc"].type}
+                 isTrending={true}
+                 onCardClick={() => handleCardClick(media["_doc"]._id, media["_doc"].type)}
+                 isWatchlisted={media["_doc"].isWatchlisted}
+                 onWatchlistClick={() =>
+                   handleWatchListClick(media["_doc"]._id, media["_doc"].type)
+                 }
+               />
+               
               </div>
             </div>
           ))}

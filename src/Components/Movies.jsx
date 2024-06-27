@@ -14,7 +14,7 @@ const Movies = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // State to store the search results
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([0]);
 
   // Access the movies list from the Redux store
   const moviesList = useSelector(selectMovies);
@@ -46,12 +46,20 @@ const Movies = () => {
   useEffect(() => {
     const fetchResults = async () => {
       if (searchTerm) {
+       try {
         const movieRes = await axios.get(
           `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
         );
+        // console.log(movieRes)
         setSearchResults(movieRes.data);
-      } else {
-        setSearchResults([]);
+
+       } catch (error) {
+        console.log(error.response.data.message)
+        // setSearchResults(error.response.data.message)
+       }
+       
+      }else{
+        setSearchResults([])
       }
     };
     fetchResults();
@@ -82,6 +90,7 @@ const Movies = () => {
             searchTerm
               ? `Found ${searchResults.length} results for '${searchTerm}'`
               : "Movies"
+           
           }
         />
       </div>

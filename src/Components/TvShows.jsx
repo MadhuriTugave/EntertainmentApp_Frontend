@@ -14,7 +14,7 @@ const TvShows = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // State to store the search results
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([0]);
 
   // Access the tvShows list from the Redux store
   const tvShowsList = useSelector(selectTVShows);
@@ -45,10 +45,14 @@ const TvShows = () => {
   useEffect(() => {
     const fetchResults = async () => {
       if (searchTerm) {
-        const movieRes = await axios.get(
-          `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
-        );
-        setSearchResults(movieRes.data);
+        try {
+          const movieRes = await axios.get(
+            `${process.env.REACT_APP_URL}/movies/search?query=${searchTerm}`
+          );
+          setSearchResults(movieRes.data);
+        } catch (error) {
+          // console.log(error)
+        }
       } else {
         setSearchResults([]);
       }
